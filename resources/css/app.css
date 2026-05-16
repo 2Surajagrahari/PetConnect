@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        @apply bg-amber-50 text-stone-800 antialiased;
+    }
+    h1, h2, h3 {
+        font-family: 'Playfair Display', serif;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full transition-all duration-200 shadow-md hover:shadow-orange-200 hover:-translate-y-0.5 active:translate-y-0;
+    }
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-amber-50 text-stone-700 font-semibold rounded-full border border-stone-200 transition-all duration-200 shadow-sm hover:-translate-y-0.5;
+    }
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-orange-400 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5;
+    }
+    .card {
+        @apply bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+    }
+    .section-label {
+        @apply text-xs font-bold uppercase tracking-widest text-orange-500 mb-3;
+    }
+    .input-field {
+        @apply block w-full rounded-xl border border-stone-200 px-4 py-3 text-sm text-stone-800 bg-white placeholder-stone-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-colors;
+    }
+    .badge-available { @apply inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full border border-green-200; }
+    .badge-pending   { @apply inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200; }
+    .badge-adopted   { @apply inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full border border-purple-200; }
+    .badge-rejected  { @apply inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full border border-red-200; }
+    .badge-completed { @apply inline-flex items-center gap-1 px-3 py-1 bg-stone-100 text-stone-600 text-xs font-bold rounded-full border border-stone-200; }
+    .badge-approved  { @apply inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full border border-green-200; }
+}
+
+/* Warm paw print pattern for backgrounds */
+.paw-bg {
+    background-color: #fffbf5;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fed7aa' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='22' r='6'/%3E%3Ccircle cx='18' cy='16' r='4'/%3E%3Ccircle cx='42' cy='16' r='4'/%3E%3Ccircle cx='14' cy='28' r='4'/%3E%3Ccircle cx='46' cy='28' r='4'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #fdf8f3; }
+::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 4px; }
+
+/* Floating animation for hero */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+.animate-float { animation: float 5s ease-in-out infinite; }
+
+/* Fade up */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 0.6s ease-out forwards; }
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
