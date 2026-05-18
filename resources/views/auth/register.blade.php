@@ -32,6 +32,7 @@
                     id="name" type="text" name="name"
                     value="{{ old('name') }}"
                     required autofocus autocomplete="name"
+                    minlength="2" maxlength="255"
                     placeholder="Jane Smith"
                     class="input-field pl-11 {{ $errors->has('name') ? 'border-red-400 bg-red-50' : '' }}"
                 >
@@ -51,8 +52,50 @@
                     id="email" type="email" name="email"
                     value="{{ old('email') }}"
                     required autocomplete="username"
+                    maxlength="255"
                     placeholder="you@example.com"
                     class="input-field pl-11 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : '' }}"
+                >
+            </div>
+        </div>
+
+        {{-- Phone --}}
+        <div>
+            <label for="phone" class="block text-xs font-bold text-stone-500 uppercase tracking-wide mb-2">Phone Number <span class="text-stone-400 font-normal normal-case">(Optional)</span></label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                </div>
+                <input
+                    id="phone" type="tel" name="phone"
+                    value="{{ old('phone') }}"
+                    autocomplete="tel"
+                    maxlength="20"
+                    pattern="^[0-9\s\-\+\(\)]*$"
+                    placeholder="(555) 123-4567"
+                    class="input-field pl-11 {{ $errors->has('phone') ? 'border-red-400 bg-red-50' : '' }}"
+                >
+            </div>
+        </div>
+
+        {{-- Address --}}
+        <div>
+            <label for="address" class="block text-xs font-bold text-stone-500 uppercase tracking-wide mb-2">Address <span class="text-stone-400 font-normal normal-case">(Optional)</span></label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <input
+                    id="address" type="text" name="address"
+                    value="{{ old('address') }}"
+                    autocomplete="street-address"
+                    maxlength="500"
+                    placeholder="123 Main St, City, Country"
+                    class="input-field pl-11 {{ $errors->has('address') ? 'border-red-400 bg-red-50' : '' }}"
                 >
             </div>
         </div>
@@ -71,7 +114,8 @@
                     :type="show ? 'text' : 'password'"
                     name="password"
                     required autocomplete="new-password"
-                    placeholder="Min. 8 characters"
+                    minlength="8"
+                    placeholder="Min. 8 characters (letters, numbers, symbols)"
                     class="input-field pl-11 pr-12 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : '' }}"
                 >
                 <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-4 flex items-center text-stone-400 hover:text-stone-600 transition-colors">
@@ -95,6 +139,7 @@
                     :type="show2 ? 'text' : 'password'"
                     name="password_confirmation"
                     required autocomplete="new-password"
+                    minlength="8"
                     placeholder="Repeat your password"
                     class="input-field pl-11 pr-12 {{ $errors->has('password_confirmation') ? 'border-red-400 bg-red-50' : '' }}"
                 >

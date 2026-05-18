@@ -39,6 +39,7 @@
                     id="email" type="email" name="email"
                     value="{{ old('email') }}"
                     required autofocus autocomplete="username"
+                    maxlength="255"
                     placeholder="you@example.com"
                     class="input-field pl-11 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : '' }}"
                 >
@@ -66,6 +67,7 @@
                     :type="show ? 'text' : 'password'"
                     name="password"
                     required autocomplete="current-password"
+                    minlength="8"
                     placeholder="••••••••"
                     class="input-field pl-11 pr-12 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : '' }}"
                 >
