@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // Create Admin
         User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'admin'
         ]);
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         // Create Shelter
         $shelter = User::create([
             'name' => 'Happy Paws Shelter',
-            'email' => 'shelter@example.com',
+            'email' => 'shelter@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'shelter'
         ]);
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         // Create Regular User
         User::create([
             'name' => 'John Doe',
-            'email' => 'user@example.com',
+            'email' => 'user@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'user'
         ]);

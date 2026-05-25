@@ -25,7 +25,7 @@
                             <div class="grid grid-cols-3 gap-1.5">
                                 @foreach(['Dog' => '🐶', 'Cat' => '🐱', 'Bird' => '🐦', 'Rabbit' => '🐰', 'Fish' => '🐟', 'Other' => '🐾'] as $sp => $emoji)
                                 <label class="text-center cursor-pointer">
-                                    <input type="radio" name="species" value="{{ $sp }}" {{ request('species') === $sp ? 'checked' : '' }} class="sr-only peer">
+                                    <input type="radio" name="species" value="{{ $sp }}" {{ request('species') === $sp ? 'checked' : '' }} class="sr-only peer" onchange="this.form.submit()">
                                     <div class="py-1.5 text-xs font-semibold border rounded-lg transition-all peer-checked:border-orange-400 peer-checked:bg-orange-50 peer-checked:text-orange-600 border-stone-200 text-stone-500 hover:border-stone-300 text-center">
                                         <span class="block text-base">{{ $emoji }}</span>{{ $sp }}
                                     </div>
@@ -42,12 +42,12 @@
                             <div class="space-y-2">
                                 @foreach(['Male', 'Female'] as $g)
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="gender" value="{{ $g }}" {{ request('gender') === $g ? 'checked' : '' }} class="text-orange-500 focus:ring-orange-400">
+                                    <input type="radio" name="gender" value="{{ $g }}" {{ request('gender') === $g ? 'checked' : '' }} class="text-orange-500 focus:ring-orange-400" onchange="this.form.submit()">
                                     <span class="text-sm text-stone-600">{{ $g }}</span>
                                 </label>
                                 @endforeach
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="gender" value="" {{ !request('gender') ? 'checked' : '' }} class="text-orange-500 focus:ring-orange-400">
+                                    <input type="radio" name="gender" value="" {{ !request('gender') ? 'checked' : '' }} class="text-orange-500 focus:ring-orange-400" onchange="this.form.submit()">
                                     <span class="text-sm text-stone-600">Any</span>
                                 </label>
                             </div>
@@ -57,7 +57,7 @@
                             <div class="grid grid-cols-3 gap-2">
                                 @foreach(['Small', 'Medium', 'Large'] as $s)
                                 <label class="text-center cursor-pointer">
-                                    <input type="radio" name="size" value="{{ $s }}" {{ request('size') === $s ? 'checked' : '' }} class="sr-only peer">
+                                    <input type="radio" name="size" value="{{ $s }}" {{ request('size') === $s ? 'checked' : '' }} class="sr-only peer" onchange="this.form.submit()">
                                     <div class="px-2 py-2 text-xs font-semibold border rounded-lg transition-all peer-checked:border-orange-400 peer-checked:bg-orange-50 peer-checked:text-orange-600 border-stone-200 text-stone-500 hover:border-stone-300">{{ $s }}</div>
                                 </label>
                                 @endforeach
