@@ -29,9 +29,9 @@
         {{-- Email --}}
         <div>
             <label for="email" class="block text-xs font-bold text-stone-500 uppercase tracking-wide mb-2">Email Address</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-orange-500 text-stone-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                 </div>
@@ -41,7 +41,7 @@
                     required autofocus autocomplete="username"
                     maxlength="255"
                     placeholder="you@example.com"
-                    class="input-field pl-11 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : '' }}"
+                    class="w-full pl-11 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-400/10 transition-all outline-none {{ $errors->has('email') ? 'border-red-400 bg-red-50' : '' }}"
                 >
             </div>
         </div>
@@ -51,14 +51,14 @@
             <div class="flex justify-between items-center mb-2">
                 <label for="password" class="block text-xs font-bold text-stone-500 uppercase tracking-wide">Password</label>
                 @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="text-xs font-semibold text-orange-500 hover:text-orange-700 transition-colors">
+                <a href="{{ route('password.request') }}" class="text-xs font-semibold text-orange-500 hover:text-orange-700 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-orange-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left">
                     Forgot password?
                 </a>
                 @endif
             </div>
-            <div class="relative" x-data="{ show: false }">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="relative group" x-data="{ show: false }">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-orange-500 text-stone-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                     </svg>
                 </div>
@@ -69,7 +69,7 @@
                     required autocomplete="current-password"
                     minlength="8"
                     placeholder="••••••••"
-                    class="input-field pl-11 pr-12 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : '' }}"
+                    class="w-full pl-11 pr-12 py-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-400/10 transition-all outline-none {{ $errors->has('password') ? 'border-red-400 bg-red-50' : '' }}"
                 >
                 <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-4 flex items-center text-stone-400 hover:text-stone-600 transition-colors">
                     <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -88,14 +88,20 @@
         </div>
 
         {{-- Submit --}}
-        <button type="submit" class="btn-primary w-full justify-center py-3.5 text-base mt-2">
-            Sign In to PetConnect
+        <button type="submit" class="w-full relative group overflow-hidden rounded-xl bg-orange-500 px-6 py-4 text-white shadow-lg shadow-orange-500/30 transition-all hover:shadow-orange-500/50 hover:bg-orange-600 mt-4">
+            <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+            <span class="relative text-base font-bold tracking-wide flex items-center justify-center gap-2">
+                Sign In to PetConnect
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
         </button>
 
         {{-- Register link --}}
-        <p class="text-center text-sm text-stone-500 pt-2">
-            New to PetConnect?
-            <a href="{{ route('register') }}" class="font-semibold text-orange-500 hover:text-orange-700 transition-colors">Create a free account →</a>
-        </p>
+        <div class="text-center mt-6">
+            <p class="text-sm text-stone-500">
+                New to PetConnect?
+                <a href="{{ route('register') }}" class="font-bold text-orange-500 hover:text-orange-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-orange-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left">Create a free account</a>
+            </p>
+        </div>
     </form>
 </x-guest-layout>

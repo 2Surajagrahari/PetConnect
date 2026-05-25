@@ -94,6 +94,30 @@
         </div>
     @endif
 
+    {{-- Pop-up Notifications (Database) --}}
+    @auth
+        @if(auth()->user()->unreadNotifications->count() > 0)
+            <div x-data="{ notifications: {{ auth()->user()->unreadNotifications->toJson() }}, activeIndex: 0, show: true, dismiss() { this.show = false; this.markAsRead(this.notifications[this.activeIndex].id); setTimeout(() => { if (this.activeIndex < this.notifications.length - 1) { this.activeIndex++; this.show = true; } }, 500); }, markAsRead(id) { fetch('/notifications/' + id + '/mark-as-read', { method: 'POST', headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Content-Type': 'application/json' } }); } }" 
+                x-show="show && notifications.length > 0" 
+                x-init="setTimeout(() => dismiss(), 8000)"
+                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="fixed bottom-6 right-6 z-50 max-w-sm w-full bg-white border border-orange-200 rounded-2xl shadow-xl shadow-orange-100 p-4 flex items-start gap-4">
+                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg class="w-5 h-5 text-orange-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                </div>
+                <div class="flex-1">
+                    <p class="font-bold text-stone-900 text-sm mb-0.5" x-text="notifications[activeIndex].data.type_label || 'New Notification'"></p>
+                    <p class="text-stone-500 text-sm leading-relaxed" x-text="notifications[activeIndex].data.message"></p>
+                    <div class="mt-3 flex gap-2">
+                        <button @click="dismiss()" class="text-xs font-semibold text-orange-600 hover:text-orange-700 bg-orange-50 px-3 py-1.5 rounded-lg transition-colors">Acknowledge</button>
+                    </div>
+                </div>
+                <button @click="dismiss()" class="text-stone-400 hover:text-stone-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+            </div>
+        @endif
+    @endauth
+
     <main>{{ $slot }}</main>
 
     {{-- Footer --}}

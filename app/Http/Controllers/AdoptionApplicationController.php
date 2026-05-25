@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\AdoptionApplication;
 use App\Models\Pet;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewRequestNotification;
+use App\Notifications\RequestApprovedNotification;
 
 class AdoptionApplicationController extends Controller
 {
@@ -50,6 +54,12 @@ class AdoptionApplicationController extends Controller
             ...$validated
         ]);
 
+        $admins = User::whereIn('role', ['admin', 'shelter'])->get();
+        Notification::send($admins, new NewRequestNotification(
+            "New adoption application submitted for {$pet->name} by {$request->user()->name}.", 
+            'New Application'
+        ));
+
         return redirect()->route('dashboard')->with('success', 'Adoption application submitted successfully! We\'ll review it soon.');
     }
 
@@ -73,6 +83,10 @@ class AdoptionApplicationController extends Controller
         // If approved, you might want to automatically update the pet's status too
         if ($validated['status'] === 'approved') {
             $application->pet->update(['status' => 'pending']); // Pending actual pickup
+            $application->user->notify(new RequestApprovedNotification(
+                "Your adoption application for {$application->pet->name} has been approved!",
+                'Application Approved'
+            ));
         } elseif ($validated['status'] === 'completed') {
             $application->pet->update(['status' => 'adopted']);
         }

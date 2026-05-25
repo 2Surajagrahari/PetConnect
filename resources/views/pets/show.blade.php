@@ -12,9 +12,26 @@
                 {{-- Images --}}
                 <div class="w-full lg:w-1/2" x-data="{ active: 0 }">
                     @php
-                    $fallback = str_contains(strtolower($pet->breed ?? ''), 'cat') || str_contains(strtolower($pet->breed ?? ''), 'siamese')
-                        ? 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80'
-                        : 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80';
+                    $speciesFallbacks = [
+                        'bird' => 'https://images.unsplash.com/photo-1552728089-571ebd6a45cb?auto=format&fit=crop&w=800&q=80',
+                        'rabbit' => 'https://images.unsplash.com/photo-1585110396000-c9faf4e4f9ba?auto=format&fit=crop&w=800&q=80',
+                        'fish' => 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=800&q=80',
+                        'other' => 'https://images.unsplash.com/photo-1425082661705-1834bfd0739c?auto=format&fit=crop&w=800&q=80',
+                        'dog' => 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80',
+                        'cat' => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80',
+                    ];
+                    
+                    $s = strtolower($pet->species ?? '');
+                    $b = strtolower($pet->breed ?? '');
+                    
+                    $fallback = 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80';
+                    
+                    if (isset($speciesFallbacks[$s])) {
+                        $fallback = $speciesFallbacks[$s];
+                    }
+                    if (str_contains($b, 'cat') || str_contains($b, 'siamese')) {
+                        $fallback = $speciesFallbacks['cat'];
+                    }
                     @endphp
                     <div class="relative h-80 lg:h-full min-h-[380px] bg-stone-100">
                         @if($pet->images->count() > 0)

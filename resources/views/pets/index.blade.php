@@ -85,23 +85,33 @@
 
                 @if($pets->count())
                 @php
+                $speciesFallbacks = [
+                    'bird' => 'https://images.unsplash.com/photo-1552728089-571ebd6a45cb?auto=format&fit=crop&w=600&q=80',
+                    'rabbit' => 'https://images.unsplash.com/photo-1585110396000-c9faf4e4f9ba?auto=format&fit=crop&w=600&q=80',
+                    'fish' => 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=600&q=80',
+                    'other' => 'https://images.unsplash.com/photo-1425082661705-1834bfd0739c?auto=format&fit=crop&w=600&q=80',
+                    'dog' => 'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=600&q=80',
+                    'cat' => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80',
+                ];
                 $breedFallbacks = [
                     'retriever' => 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80',
                     'beagle' => 'https://images.unsplash.com/photo-1505628346881-b72b27e84530?auto=format&fit=crop&w=600&q=80',
                     'labrador' => 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=600&q=80',
                     'siamese' => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80',
-                    'cat' => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80',
-                    'dog' => 'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=600&q=80',
-                    'default' => 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=600&q=80',
                 ];
                 @endphp
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     @foreach($pets as $pet)
                     @php
                         $b = strtolower($pet->breed ?? '');
-                        $img = $breedFallbacks['default'];
+                        $s = strtolower($pet->species ?? '');
+                        $img = 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=600&q=80'; // default
+                        
+                        if (isset($speciesFallbacks[$s])) {
+                            $img = $speciesFallbacks[$s];
+                        }
                         foreach($breedFallbacks as $k => $u) {
-                            if ($k !== 'default' && str_contains($b, $k)) { $img = $u; break; }
+                            if (str_contains($b, $k)) { $img = $u; break; }
                         }
                     @endphp
                     <div class="card group">

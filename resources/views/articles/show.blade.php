@@ -8,14 +8,14 @@
         </div>
     </x-slot>
 
-    <div class="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-16 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         @if($article->image_path)
-        <div class="w-full h-72 rounded-2xl overflow-hidden bg-stone-100 mb-8">
+        <div class="w-full h-80 md:h-96 rounded-3xl overflow-hidden bg-stone-100 mb-12 shadow-sm border border-stone-100">
             <img src="{{ Storage::url($article->image_path) }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
         </div>
         @endif
 
-        <h1 class="text-4xl font-bold text-stone-900 mb-4 leading-tight">{{ $article->title }}</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight" style="font-family:'Playfair Display',serif">{{ $article->title }}</h1>
         <div class="flex items-center gap-4 text-sm text-stone-400 mb-10 pb-6 border-b border-stone-100">
             <span class="flex items-center gap-1.5">
                 <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-xs font-bold">{{ strtoupper(substr($article->user->name ?? 'S', 0, 1)) }}</div>
@@ -34,8 +34,13 @@
             @endcan
         </div>
 
-        <div class="prose prose-stone max-w-none prose-headings:font-bold prose-a:text-orange-500 prose-a:no-underline hover:prose-a:underline">
-            {!! nl2br(e($article->content)) !!}
+        <div class="prose prose-lg prose-stone max-w-none 
+                    prose-headings:font-bold prose-headings:text-stone-900 prose-headings:font-serif
+                    prose-p:text-stone-600 prose-p:leading-relaxed 
+                    prose-li:text-stone-600 
+                    prose-strong:text-stone-900
+                    prose-a:text-orange-500 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline">
+            {!! Str::markdown($article->content) !!}
         </div>
 
         <div class="mt-12 p-6 bg-orange-50 rounded-2xl border border-orange-100 flex items-center gap-5">

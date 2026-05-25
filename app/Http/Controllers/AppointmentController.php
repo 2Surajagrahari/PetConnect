@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Pet;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewRequestNotification;
+use App\Notifications\RequestApprovedNotification;
 
 class AppointmentController extends Controller
 {
@@ -37,7 +41,14 @@ class AppointmentController extends Controller
             'date_time' => 'required|date|after:now',
         ]);
 
-        $request->user()->appointments()->create($validated);
+        $appointment = $request->user()->appointments()->create($validated);
+
+        $petName = $appointment->pet ? " for {$appointment->pet->name}" : '';
+        $admins = User::whereIn('role', ['admin', 'shelter'])->get();
+        Notification::send($admins, new NewRequestNotification(
+            "New appointment booked by {$request->user()->name}{$petName}.", 
+            'New Appointment'
+        ));
 
         return redirect()->route('dashboard')->with('success', 'Appointment booked successfully.');
     }
@@ -57,6 +68,13 @@ class AppointmentController extends Controller
         ]);
 
         $appointment->update(['status' => $validated['status']]);
+
+        if ($validated['status'] === 'approved') {
+            $appointment->user->notify(new RequestApprovedNotification(
+                "Your appointment has been approved for " . $appointment->date_time->format('M d, Y h:i A') . "!",
+                'Appointment Approved'
+            ));
+        }
 
         return back()->with('success', 'Appointment status updated.');
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\AdoptionApplicationController;
 use App\Http\Controllers\PetCareArticleController;
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -14,14 +15,21 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pets', [PetController::class, 'index'])->name('pets.index');
 
 Route::get('/articles', [PetCareArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{article}', [PetCareArticleController::class, 'show'])->name('articles.show');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Notifications
+    Route::post('/notifications/{id}/mark-as-read', function (Request $request, $id) {
+        $notification = $request->user()->notifications()->find($id);
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' => true]);
+    })->name('notifications.read');
 
     // Adoption Applications
     Route::post('/pets/{pet}/adopt', [AdoptionApplicationController::class, 'store'])->name('applications.store');
@@ -53,5 +61,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Public pet detail — must come after /pets/create to avoid conflict
 Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
+
+// Public article detail — must come after /articles/create to avoid conflict
+Route::get('/articles/{article}', [PetCareArticleController::class, 'show'])->name('articles.show');
 
 require __DIR__.'/auth.php';
