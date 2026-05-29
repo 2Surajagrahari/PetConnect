@@ -35,6 +35,9 @@ WORKDIR /var/www
 # Copy existing application directory contents
 COPY . /var/www
 
+# Install Laravel dependencies
+RUN composer install --no-dev --optimize-autoloader
+
 # Change ownership of our applications
 RUN chown -R www-data:www-data /var/www
 
